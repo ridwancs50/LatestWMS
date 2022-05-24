@@ -61,6 +61,7 @@ namespace LatestWMS.Controllers
             {
                 var acc = user.Account;
                 acc.PinHash = BCrypt.Net.BCrypt.HashPassword(pin.Pin);
+                acc.PinCreationDate = pin.CreationDate;
                 
                 //_dbcontext.Accounts.Add(acc);
                 _dbcontext.SaveChanges();

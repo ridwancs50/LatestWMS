@@ -9,6 +9,6 @@ namespace LatestWMS.DTOs
     {
         public string Pin { get; set; }
         public DateTimeOffset CreationDate { get; set; } = DateTime.UtcNow;
-        public DateTimeOffset DateLastModified { get; set; } = DateTime.UtcNow;
+       // public DateTimeOffset DateLastModified { get; set; } = DateTime.UtcNow;
     }
 }

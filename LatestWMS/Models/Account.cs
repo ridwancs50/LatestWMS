@@ -41,7 +41,9 @@ namespace LatestWMS.Models
         public decimal BlockedAmount { get; set; }
         public DateTimeOffset CreationDate { get; set; }
         public DateTimeOffset DateLastModified { get; set; }
-       // public ApplicationUser applicationUser { get; set; }
+        public DateTimeOffset PinCreationDate { get; set; }
+
+        // public ApplicationUser applicationUser { get; set; }
         //public IEnumerable<Transaction> Transactions { get; set; }
 
     }
