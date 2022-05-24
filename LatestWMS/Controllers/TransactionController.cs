@@ -155,9 +155,26 @@ namespace LatestWMS.Controllers
                 newtransfer.Narration = trans.Narration;
                 newtransfer.TransactionDate = DateTime.Now;
 
+                if (accountPin == null)
+                {
+                    return BadRequest(new RegistrationResponse()
+                    {
+                        Errors = new List<string>() {
+                                "Please set your pin"
+                            },
+                        Success = false
+                    });
+                }
+
                 if (!BCrypt.Net.BCrypt.Verify(trans.Pin, accountPin))
                 {
-                    return null;
+                    return BadRequest(new RegistrationResponse()
+                    {
+                        Errors = new List<string>() {
+                                "Incorrect Pin"
+                            },
+                        Success = false
+                    });
                 }
 
                 var verifyBalance = tmpAccount.CurrentBalance - trans.Amount;
@@ -165,6 +182,10 @@ namespace LatestWMS.Controllers
                 if (trans.Amount > 0 && trans.Amount > verifyBalance)
                 {
                     return StatusCode(404, "Insufficient Balance");
+                }
+                if (trans.Amount <= 0 && trans.Amount > 1000000)
+                {
+                    return StatusCode(404, "Input a valid amount");
                 }
                 tmpAccount.CurrentBalance -= trans.Amount;
                 beneficiaryAccount.CurrentBalance += trans.Amount;

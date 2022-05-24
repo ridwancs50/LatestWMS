@@ -1,4 +1,6 @@
-﻿using LatestWMS.Context;
+﻿/*using LatestWMS.Context;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -6,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -13,6 +16,7 @@ namespace LatestWMS.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
     public class ClaimSetupController : ControllerBase
     {
         private readonly WMSContext _dbcontext;
@@ -88,3 +92,4 @@ namespace LatestWMS.Controllers
         }
     }
 }
+*/

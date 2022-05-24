@@ -54,9 +54,8 @@ namespace LatestWMS.Controllers
             if (ModelState.IsValid)
             {
                 // We can utilise the model
-                var existingUser = await _userManager.FindByEmailAsync(user.Email);
-
-                if (existingUser != null)
+               // var existingUser = await _userManager.FindByEmailAsync(user.Email);
+              if(_dbContext.AppUser.Any(x => x.UserName == user.Email || x.Email == user.Email))
                 {
                     return BadRequest(new RegistrationResponse()
                     {
@@ -155,7 +154,7 @@ namespace LatestWMS.Controllers
             });
         }
 
-        [HttpPost]
+      /*  [HttpPost]
         [Route("RefreshToken")]
         public async Task<IActionResult> RefreshToken([FromBody] TokenRequest tokenRequest)
         {
@@ -184,7 +183,7 @@ namespace LatestWMS.Controllers
                 },
                 Success = false
             });
-        }
+        }*/
 
 
         private async Task<AuthResult> GenerateJwtToken(ApplicationUser user)
