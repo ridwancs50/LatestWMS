@@ -349,11 +349,15 @@ namespace LatestWMS.Controllers
                 newtransfer.Narration = fund.Narration;
                 newtransfer.TransactionDate = DateTime.Now;
 
-                var verifyBalance = tmpAccount.CurrentBalance - fund.Amount;
+                var verifyBalance = depositorAccount.CurrentBalance - fund.Amount;
 
                 if (fund.Amount > 0 && fund.Amount > verifyBalance)
                 {
-                    return StatusCode(404, "Insufficient Balance");
+                    return StatusCode(404, "Your account cannot be funded. No enough Balance");
+                }
+                if (fund.Amount <= 0 && fund.Amount > 1000000)
+                {
+                    return StatusCode(404, "Input a valid amount");
                 }
                 tmpAccount.CurrentBalance += fund.Amount;
                 depositorAccount.CurrentBalance -= fund.Amount;

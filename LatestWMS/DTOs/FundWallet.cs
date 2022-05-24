@@ -12,7 +12,7 @@ namespace LatestWMS.DTOs
         public string DepositorBank { get; set; }
         public string DepositorAccount { get; set; }
         public string PhoneNumber { get; set; }
-        public string AccountNumber { get; set; }
+        //public string AccountNumber { get; set; }
         public decimal Amount { get; set; }
         public string Narration { get; set; }
         public DateTimeOffset TransactionDate { get; set; }
