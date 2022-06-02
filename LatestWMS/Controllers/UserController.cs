@@ -1,5 +1,6 @@
 ﻿using LatestWMS.Context;
 using LatestWMS.DTOs;
+using LatestWMS.DTOs.Responses;
 using LatestWMS.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -33,8 +34,9 @@ namespace LatestWMS.Controllers
             var user = await _dbContext.AppUser.FirstOrDefaultAsync(x => x.UserName == id);
 
             if (user == null)
+            {
                 return NotFound();
-
+            }
             return Ok(user);
         }
 
@@ -80,25 +82,29 @@ namespace LatestWMS.Controllers
         }
 
         [HttpDelete("DeleteUser")]
-
-        public IActionResult Delete([FromRoute] string Id)
+        public async Task<IActionResult> DeleteUser(string Username)
         {
-            var user = _dbContext.AppUser.FirstOrDefault(x => x.UserName == Id);
-            try
-            {
-                if (user == null)
-                {
-                    return StatusCode(404, "User not found");
-                }
-                _dbContext.Entry(user).State = EntityState.Deleted;
-                _dbContext.SaveChanges();
-            }
-            catch (Exception ex)
-            {
+            var userdel = await _dbContext.AppUser.FirstOrDefaultAsync(x => x.UserName == Username);
+            var r_token = _dbContext.RefreshTokens.Where(x => x.UserId == userdel.Id);
 
-                return StatusCode(500, ex.Message);
+            if (r_token != null)
+            {
+               _dbContext.RefreshTokens.RemoveRange(r_token);
             }
-            return Ok(user);
+
+            if (userdel == null)
+            {
+                return BadRequest(new RegistrationResponse()
+                {
+                    Errors = new List<string>() {
+                                "user not found"
+                            },
+                    Success = false
+                });
+            }
+            _dbContext.AppUser.Remove(userdel);
+            _dbContext.SaveChanges();
+            return Ok(userdel.Id);
         }
     }
 }

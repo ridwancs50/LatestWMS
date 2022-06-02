@@ -183,7 +183,7 @@ namespace LatestWMS.Controllers
                 {
                     return StatusCode(404, "Insufficient Balance");
                 }
-                if (trans.Amount <= 0 && trans.Amount > 1000000)
+                if (trans.Amount <= 0 || trans.Amount > 1000000)
                 {
                     return StatusCode(404, "Input a valid amount");
                 }

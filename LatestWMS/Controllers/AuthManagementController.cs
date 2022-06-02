@@ -66,7 +66,7 @@ namespace LatestWMS.Controllers
                     });
                 }
 
-                var newUser = new ApplicationUser { Email = user.Email, UserName = user.Email, FirstName = user.FirstName, LastName = user.LastName, Gender = user.Gender, PhoneNumber = user.PhoneNumber };
+                var newUser = new ApplicationUser { Email = user.Email, UserName = user.Email, FirstName = user.FirstName, LastName = user.LastName, Gender = user.Gender, PhoneNumber = user.PhoneNumber};
                 Address addr = new Address();
                 Account account = new Account();
                 account.AccountNumber = account.AccountNumber;
@@ -74,6 +74,7 @@ namespace LatestWMS.Controllers
                 newUser.Account = account;
                 newUser.Address = addr;
                 newUser.CreationDate = DateTime.UtcNow;
+                newUser.DateLastModified = DateTime.UtcNow;
                 addr.FullAddress = user.Address;
                 addr.City = user.City;
                 addr.State = user.State;

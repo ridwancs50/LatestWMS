@@ -1,5 +1,6 @@
 ﻿using LatestWMS.Context;
 using LatestWMS.DTOs;
+using LatestWMS.DTOs.Responses;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -95,26 +96,30 @@ namespace LatestWMS.Controllers
 
         [HttpDelete("DeleteAccounts")]
 
-        public IActionResult DeleteAccount([FromRoute] string Id)
+        public IActionResult DeleteAccount(string Account_Number)
         {
-            var account = _dbContext.Accounts.FirstOrDefault(x => x.AccountNumber == Id);
-            try
+            var account = _dbContext.Accounts.FirstOrDefault(x => x.AccountNumber == Account_Number);
+
+            var userAcc = _dbContext.AppUser.FirstOrDefault(y => y.Account.AccountNumber == Account_Number);
+            if (userAcc.Account == null)
             {
-                if (account == null)
+                return BadRequest(new RegistrationResponse()
                 {
-                    return StatusCode(404, "Account does not exist");
-                }
-                _dbContext.Entry(account).State = EntityState.Deleted;
-                _dbContext.SaveChanges();
+                    Errors = new List<string>() {
+                                "Account does not exist!"
+                            },
+                    Success = false
+                });
             }
-            catch (Exception ex)
+            if (userAcc != null)
             {
-
-                return StatusCode(500, ex.Message);
+                userAcc.Account = null;
+                _dbContext.Accounts.Remove(account);
             }
-           // var accounts = _dbContext.Accounts.ToList();
-            return Ok(account);
+           
+            //_dbContext.Accounts.Remove(account);
+            _dbContext.SaveChanges();
+            return Ok(account.AccountNumber);
         }
-
     }
 }

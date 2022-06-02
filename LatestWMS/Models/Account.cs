@@ -32,7 +32,6 @@ namespace LatestWMS.Models
 
         [Key]
         public string AccountNumber { get; set; }
-        // public Guid Id { get; set; }
         public string AccountName { get; set; } //new
         public string PinHash { get; set; } //new
         public decimal CurrentBalance { get; set; }
@@ -42,9 +41,6 @@ namespace LatestWMS.Models
         public DateTimeOffset CreationDate { get; set; }
         public DateTimeOffset DateLastModified { get; set; }
         public DateTimeOffset PinCreationDate { get; set; }
-
-        // public ApplicationUser applicationUser { get; set; }
-        //public IEnumerable<Transaction> Transactions { get; set; }
 
     }
 }

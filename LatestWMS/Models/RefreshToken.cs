@@ -18,7 +18,7 @@ namespace LatestWMS.Models
         public DateTime AddedDate { get; set; }
         public DateTime ExpiryDate { get; set; }
 
-        [ForeignKey(nameof(UserId))]
+        [ForeignKey(nameof(UserId))] 
         public IdentityUser ApplicationUser { get; set; }
     }
 }
